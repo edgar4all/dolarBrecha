@@ -26,3 +26,4 @@ config.py
 # Ignore system-specific files
 .DS_Store
 Thumbs.db
+.vscode/settings.json

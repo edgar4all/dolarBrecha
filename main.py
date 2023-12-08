@@ -7,7 +7,6 @@ import sys
 import datetime
 import mysql.connector
 
-
 def extract(index,fichas):
     precios= fichas[index].find_all(class_=['css-12u0t8b']) 
     #precio_compra= float(precios[0].text.replace(',', '.'))
@@ -25,8 +24,8 @@ async def telegramear(msg):
     await bot.send_message(chat_id=config.TELEGRAM_CHAT_ID, text=msg)
 
 def check_spread(item1,item2,data):
-    diff= percentage_difference(data[item1][1], data[item2][1])
-    msg= f'Brecha {item1} {data[item1][1]} / {item2} {data[item2][1]}: Brecha {diff}%'    
+    diff= percentage_difference(data[item1], data[item2])
+    msg= f'Brecha {item1} {data[item1]} / {item2} {data[item2]}: Brecha {diff}%'    
     print(msg)
     if diff > 5:
         asyncio.run(telegramear(msg))
@@ -58,46 +57,33 @@ def save_data(data):
 #if market_closed(): sys.exit()
 
 
-
-
-def get_element(url, element):
-    try:
-        # Send an HTTP request to the website
+def get_cotizacion(url):
+    try:        
         response = requests.get(url)
         response.raise_for_status()  # Raise an exception for bad requests
         
         # Parse the HTML content of the page
-        soup = BeautifulSoup(response.text, 'html.parser')
-
-        # Locate the element by its id
-        desired_element = soup.find(class_=element).find('p').text.strip()
-        print(desired_element)
+        soup = BeautifulSoup(response.text, 'html.parser')        
+        cotizacion = soup.find(class_="data__valores").find('p').contents[0]
+        return float(cotizacion)
 
     except requests.exceptions.RequestException as e:
         print(f"Error: {e}")
         return None
 
+# Example usage
+url= 'https://dolarhoy.com/i/cotizaciones/'
 
-url = 'https://www.dolarito.ar'
-response = requests.get(url)
-
-# Create a BeautifulSoup object
-soup = BeautifulSoup(response.text, 'html.parser')
-
-# Find specific elements on the page
-title = soup.title.text
-#paragraphs = soup.find_all('p')
-fichas = soup.find_all(class_='chakra-wrap__listitem')
-
-# Print the results
 data= {  
-    'OFICIAL': extract(0, fichas),
-    'BLUE': extract(1, fichas),
-    'MEP': extract(6, fichas),
-    'CRYPTO': extract(11, fichas),
+    'OFICIAL': get_cotizacion(url+'dolar-bancos-y-casas-de-cambio'),
+    'BLUE': get_cotizacion(url+'dolar-blue'),
+    'MEP': get_cotizacion(url+'dolar-mep'),
+    'CCL': get_cotizacion(url+'dolar-contado-con-liquidacion'),
+    #'CRYPTO': get_cotizacion(url+'bitcoin-usd'),
 }
 
 print(data)
-save_data(data)
+#save_data(data)
 check_spread('BLUE','MEP',data)
-check_spread('BLUE','CRYPTO',data)
+check_spread('BLUE','OFICIAL',data)
+check_spread('BLUE','CCL',data)

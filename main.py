@@ -31,7 +31,7 @@ def check_spread(item1,item2,data):
         asyncio.run(telegramear(msg))
 
 def market_closed():
-    return not (config.start_time <= datetime.datetime.now().time() <= config.end_time)
+    return not (config.market_starts <= datetime.datetime.now().time() <= config.market_ends)
         
 def save_data(data):
     try:

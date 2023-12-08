@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# IDE files
+.idea/
+
+# Virtual environment
+venv/
+
+# Ignore config files that may contain sensitive information
+config.py
+
+# Ignore any logs or databases
+*.log
+*.db
+*.sqlite
+
+# Ignore compiled Python files
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore system-specific files
+.DS_Store
+Thumbs.db

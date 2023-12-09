@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  dolarbrecha:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"  
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: dolarbrecha
+    ports:
+      - "3306:3306" 
+    volumes:
+      - mysql_data:/var/lib/mysql  # Mount a volume for persistent data
+
+volumes:
+  mysql_data:

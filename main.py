@@ -55,11 +55,6 @@ def save_data(data):
     except Exception as error:
         print("DB Error: ", error)
 
-############################################################
-
-#if market_closed(): sys.exit()
-
-
 def get_cotizacion(url):
     try:        
         response = requests.get(url)
@@ -74,7 +69,29 @@ def get_cotizacion(url):
         print(f"Error: {e}")
         return None
 
-# Example usage
+def binance_get(symbol):    
+    url = 'https://api.binance.com/api/v3/ticker/price'    
+
+    params = {'symbol': symbol}
+    price=0
+    response = requests.get(url, params=params)
+
+    if response.status_code == 200:    
+        data = response.json()    
+        current_price = data.get('price')    
+
+        price= round(float(current_price),2) 
+    else:
+        print(f'Error: Unable to fetch data. Status code: {response.status_code}')
+        print(response.text)
+
+    return price
+
+############################################################
+
+#if market_closed(): sys.exit()
+
+# MAIN
 url= 'https://dolarhoy.com/i/cotizaciones/'
 
 data= {  
@@ -82,7 +99,7 @@ data= {
     'BLUE': get_cotizacion(url+'dolar-blue'),
     'MEP': get_cotizacion(url+'dolar-mep'),
     'CCL': get_cotizacion(url+'dolar-contado-con-liquidacion'),
-    #'CRYPTO': get_cotizacion(url+'bitcoin-usd'),
+    'CRYPTO': binance_get("USDTARS"),
 }
 
 print(data)
@@ -90,3 +107,4 @@ print(data)
 check_spread('BLUE','MEP',data)
 check_spread('BLUE','OFICIAL',data)
 check_spread('BLUE','CCL',data)
+check_spread('BLUE','CRYPTO',data)

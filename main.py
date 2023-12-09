@@ -15,9 +15,12 @@ def extract(index,fichas):
     return [ 0, precio_venta ]
 
 def percentage_difference(a, b):
+    if b == 0:
+        return "Error: Division by zero"
+    
     difference = a - b
-    percentage_difference = (difference / a) * 100
-    return round(percentage_difference ,1)
+    percentage_difference = (difference / b) * 100
+    return round(percentage_difference, 1)
 
 async def telegramear(msg):    
     bot = Bot(token=config.TOKEN_BOT)

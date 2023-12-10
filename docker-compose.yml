@@ -9,6 +9,8 @@ services:
       - "80:80"  
     depends_on:
       - mysql
+    volumes:
+      - ./dolarBrecha.sql:/docker-entrypoint-initdb.d/dolarBrecha.sql
 
   mysql:
     image: mysql:5.7

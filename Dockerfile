@@ -6,6 +6,8 @@ WORKDIR /app
 
 # Copy the local code to the container
 COPY . /app
+COPY ./dolarBrecha.sql /docker-entrypoint-initdb.d/
+
 
 # Install dependencies
 RUN pip install --upgrade pip

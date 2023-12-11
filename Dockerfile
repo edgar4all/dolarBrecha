@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Copy the local code to the container
 COPY . /app
-COPY ./dolarBrecha.sql /docker-entrypoint-initdb.d/
+#COPY ./dolarBrecha.sql /docker-entrypoint-initdb.d/
 
 
 # Install dependencies

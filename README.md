@@ -1,7 +1,6 @@
-Este proyecto necesito que generes tu archivo de configuración.
+Este proyecto necesita que generes tu propio archivo de configuración.
 
-Generar config.py
-
+--------------config.py:-----------------
 #Este es el contenido de la config... =)
 import datetime
 

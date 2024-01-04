@@ -18,4 +18,4 @@ database='dolarbrecha'
 market_starts = datetime.time(10, 0, 0)  # 10:00:00 AM
 market_ends = datetime.time(18, 0, 0)  # 6:00:00 PM
 
-#fin del archivo de configuracion
+#fin del archivo de configuración

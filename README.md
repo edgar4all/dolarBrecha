@@ -12,7 +12,7 @@ TELEGRAM_CHAT_ID = "XXXXXXXXX"
 
 dbhost='localhost'
 dbuser='root'
-dbpassword=''
+dbpassword='<your password>'
 database='dolarbrecha'
 
 #Horario del mercado
